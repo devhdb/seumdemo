@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>위험성평가 실습 제출 샘플</title>
+  <style>
+    :root{
+      --bg:#f4f7fb;
+      --card:#ffffff;
+      --line:#d9e2ec;
+      --text:#15202b;
+      --muted:#5b6773;
+      --primary:#1f5fae;
+      --primary-soft:#eaf3ff;
+      --danger:#c62828;
+      --ok:#1b7f4d;
+      --radius:18px;
+      --shadow:0 12px 30px rgba(21,32,43,.08);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.6;
+    }
+    .wrap{
+      max-width:980px;
+      margin:40px auto;
+      padding:0 20px 40px;
+    }
+    .hero{
+      background:linear-gradient(135deg,#f7fbff,#eef5ff);
+      border:1px solid var(--line);
+      border-radius:26px;
+      padding:28px 30px;
+      box-shadow:var(--shadow);
+      margin-bottom:24px;
+    }
+    .hero h1{
+      margin:0 0 10px;
+      font-size:32px;
+      line-height:1.25;
+    }
+    .hero p{
+      margin:0;
+      color:var(--muted);
+      font-size:15px;
+    }
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:26px;
+      margin-bottom:18px;
+    }
+    .section-title{
+      font-size:22px;
+      font-weight:700;
+      margin:0 0 18px;
+    }
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr));
+      gap:16px;
+    }
+    .field{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      margin-bottom:16px;
+    }
+    .field.full{grid-column:1 / -1;}
+    label{
+      font-weight:700;
+      font-size:15px;
+    }
+    .required::after{
+      content:" *";
+      color:var(--danger);
+    }
+    input, textarea, select{
+      width:100%;
+      border:1px solid #cbd5e1;
+      border-radius:12px;
+      padding:12px 14px;
+      font-size:15px;
+      background:#fff;
+      color:var(--text);
+    }
+    textarea{min-height:110px; resize:vertical;}
+    .chips{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+    }
+    .chip{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      border:1px solid #cbd5e1;
+      background:#fff;
+      border-radius:999px;
+      padding:8px 12px;
+      font-size:14px;
+    }
+    .note{
+      background:var(--primary-soft);
+      border:1px solid #cfe0fb;
+      border-radius:14px;
+      padding:14px 16px;
+      color:#214b7a;
+      font-size:14px;
+      margin-top:10px;
+    }
+    .actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-top:10px;
+    }
+    button{
+      border:0;
+      border-radius:12px;
+      padding:14px 18px;
+      font-size:15px;
+      font-weight:700;
+      cursor:pointer;
+    }
+    .primary{
+      background:var(--primary);
+      color:#fff;
+    }
+    .secondary{
+      background:#eef2f7;
+      color:var(--text);
+    }
+    .result{
+      white-space:pre-wrap;
+      background:#0f172a;
+      color:#f8fafc;
+      border-radius:14px;
+      padding:18px;
+      font-size:14px;
+      overflow:auto;
+      min-height:160px;
+    }
+    .footer{
+      color:var(--muted);
+      font-size:13px;
+      margin-top:12px;
+    }
+    @media (max-width: 760px){
+      .grid{grid-template-columns:1fr;}
+      .hero h1{font-size:26px;}
+      .wrap{margin:20px auto;}
+      .card,.hero{padding:20px;}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="hero">
+      <h1>위험성평가 실습 제출서 샘플</h1>
+      <p>교안에서 사례를 보여준 뒤 QR 링크로 이 화면에 접속해 작성하도록 설계한 샘플 입니다.</p>
+    </div>
+
+    <form id="riskForm">
+      <div class="card">
+        <h2 class="section-title">1. 제출자 기본 정보</h2>
+        <div class="grid">
+          <div class="field">
+            <label class="required" for="name">성명</label>
+            <input id="name" name="name" required />
+          </div>
+          <div class="field">
+            <label class="required" for="company">회사명</label>
+            <input id="company" name="company" required />
+          </div>
+          <div class="field">
+            <label for="department">부서명</label>
+            <input id="department" name="department" />
+          </div>
+          <div class="field">
+            <label for="position">직책</label>
+            <input id="position" name="position" />
+          </div>
+          <div class="field">
+            <label class="required" for="evalDate">평가일시</label>
+            <input id="evalDate" name="evalDate" type="datetime-local" required />
+          </div>
+          <div class="field">
+            <label for="phone">연락처 뒤 4자리 / 사번</label>
+            <input id="phone" name="phone" />
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 class="section-title">2. 작업 정보</h2>
+        <div class="grid">
+          <div class="field">
+            <label class="required" for="workDept">작업부서 / 현장명</label>
+            <input id="workDept" name="workDept" required />
+          </div>
+          <div class="field">
+            <label class="required" for="processName">공정명 / 작업명</label>
+            <input id="processName" name="processName" required />
+          </div>
+          <div class="field full">
+            <label class="required" for="jobDetail">세부 작업 내용</label>
+            <textarea id="jobDetail" name="jobDetail" required placeholder="예: 절단기 주변 청소 작업, 문서박스 수동 운반, 청소약품 분무 작업 등"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 class="section-title">3. 위험성평가 실습</h2>
+
+        <div class="field">
+          <label class="required" for="target">평가 대상</label>
+          <textarea id="target" name="target" required placeholder="예: 절단기 주변 바닥, 문서박스 적재물, 약품 분무 작업자 등"></textarea>
+        </div>
+
+        <div class="field">
+          <label class="required" for="hazard">유해·위험요인</label>
+          <textarea id="hazard" name="hazard" required placeholder="예: 미끄럼 위험, 끼임 위험, 피부노출 위험, 중량물 취급에 따른 근골격계 부담 등"></textarea>
+        </div>
+
+        <div class="field">
+          <label for="currentControl">현재 안전보건조치 / 현재 상태</label>
+          <textarea id="currentControl" name="currentControl" placeholder="예: 안전표지 부착, 장갑 지급, 작업 전 교육 실시, 특별한 조치 없음 등"></textarea>
+        </div>
+
+        <div class="field">
+          <label class="required">결정 구분</label>
+          <div class="chips">
+            <label class="chip"><input type="radio" name="decision" value="적정" required> 적정</label>
+            <label class="chip"><input type="radio" name="decision" value="보완 필요" required> 보완 필요</label>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="required" for="countermeasure">위험성 감소대책</label>
+          <textarea id="countermeasure" name="countermeasure" required placeholder="예: 미끄럼 방지 매트 설치, 작업 전원 전원차단 확인, 보호구 착용 의무화 등"></textarea>
+        </div>
+
+        <div class="grid">
+          <div class="field">
+            <label for="dueDate">개선 예정일</label>
+            <input id="dueDate" name="dueDate" type="date" />
+          </div>
+          <div class="field">
+            <label for="owner">담당자</label>
+            <input id="owner" name="owner" />
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="required">제출 확인</label>
+          <label class="chip">
+            <input type="checkbox" id="confirm" required>
+            본 실습은 교육 중 제시된 사례를 바탕으로 직접 작성하였습니다.
+          </label>
+        </div>
+
+
+      </div>
+
+      <div class="card">
+        <h2 class="section-title">4. 샘플 결과 미리보기</h2>
+        <div class="actions">
+          <button type="submit" class="primary">제출 내용 미리보기</button>
+          <button type="button" class="secondary" id="copyBtn">결과 복사</button>
+          <button type="reset" class="secondary">초기화</button>
+        </div>
+        <div class="footer">제출내용 미리보는 화면</div>
+        <pre id="result" class="result">아직 제출된 내용이 없습니다.</pre>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById('riskForm');
+    const result = document.getElementById('result');
+    const copyBtn = document.getElementById('copyBtn');
+
+    function getValue(name){
+      const el = form.querySelector(`[name="${name}"]`);
+      if(!el) return '';
+      if(el.type === 'radio'){
+        const checked = form.querySelector(`[name="${name}"]:checked`);
+        return checked ? checked.value : '';
+      }
+      return el.value || '';
+    }
+
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+
+      const data = {
+        성명: getValue('name'),
+        회사명: getValue('company'),
+        부서명: getValue('department'),
+        직책: getValue('position'),
+        평가일시: getValue('evalDate'),
+        연락처뒤4자리_사번: getValue('phone'),
+        작업부서_현장명: getValue('workDept'),
+        공정명_작업명: getValue('processName'),
+        세부작업내용: getValue('jobDetail'),
+        평가대상: getValue('target'),
+        유해위험요인: getValue('hazard'),
+        현재안전보건조치: getValue('currentControl'),
+        결정구분: getValue('decision'),
+        위험성감소대책: getValue('countermeasure'),
+        개선예정일: getValue('dueDate'),
+        담당자: getValue('owner'),
+        제출확인: document.getElementById('confirm').checked ? '예' : '아니오'
+      };
+
+      const lines = [
+        '[위험성평가 실습 제출 결과]',
+        '----------------------------------------',
+        ...Object.entries(data).map(([k,v]) => `${k}: ${v || ''}`)
+      ];
+      result.textContent = lines.join('\n');
+      result.scrollIntoView({behavior:'smooth', block:'start'});
+    });
+
+    copyBtn.addEventListener('click', async function(){
+      try{
+        await navigator.clipboard.writeText(result.textContent);
+        alert('결과가 복사되었습니다.');
+      }catch(err){
+        alert('복사에 실패했습니다. 직접 선택해서 복사해 주세요.');
+      }
+    });
+  </script>
+</body>
+</html>
